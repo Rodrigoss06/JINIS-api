@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Message, Prisma, Room } from '@prisma/client';
+import { MENSAJE, Prisma, ROOM } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -7,21 +7,21 @@ export class ChatService {
     constructor(private prisma:PrismaService){}
 
     async room(
-        roomWhereUniqueInput: Prisma.RoomWhereUniqueInput
-    ): Promise<Room|null>{
-        return this.prisma.room.findUnique({
-            where: roomWhereUniqueInput
+        ROOMWhereUniqueInput: Prisma.ROOMWhereUniqueInput
+    ): Promise<ROOM|null>{
+        return this.prisma.rOOM.findUnique({
+            where: ROOMWhereUniqueInput
         })
     }
     
     async rooms(
         skip?: number,
         take?: number,
-        cursor?: Prisma.RoomWhereUniqueInput,
-        where?: Prisma.RoomWhereInput,
-        orderBy?: Prisma.RoomOrderByWithRelationInput,
-    ): Promise<Room[]>{
-        return this.prisma.room.findMany({
+        cursor?: Prisma.ROOMWhereUniqueInput,
+        where?: Prisma.ROOMWhereInput,
+        orderBy?: Prisma.ROOMOrderByWithRelationInput,
+    ): Promise<ROOM[]>{
+        return this.prisma.rOOM.findMany({
             skip,
             take,
             cursor,
@@ -31,32 +31,32 @@ export class ChatService {
     }
 
     async createRoom(
-        roomName: string
+        ROOMName: string
     ){
-        return await this.prisma.room.upsert({
-            where:{id:0,name:roomName},
+        return await this.prisma.rOOM.upsert({
+            where:{ID_ROOM:0,NOMBRE:ROOMName},
             update: {},
-            create: {name:roomName}
+            create: {NOMBRE:ROOMName}
         })
     }
 
 
-    async message(
-        messageWhereUniqueInput: Prisma.MessageWhereUniqueInput
-    ): Promise<Message|null>{
-        return this.prisma.message.findUnique({
-            where: messageWhereUniqueInput
+    async mensaje(
+        MENSAJEWhereUniqueInput: Prisma.MENSAJEWhereUniqueInput
+    ): Promise<MENSAJE|null>{
+        return this.prisma.mENSAJE.findUnique({
+            where: MENSAJEWhereUniqueInput
         })
     }
     
-    async messages(
+    async mensajes(
         skip?: number,
         take?: number,
-        cursor?: Prisma.MessageWhereUniqueInput,
-        where?: Prisma.MessageWhereInput,
-        orderBy?: Prisma.MessageOrderByWithRelationInput,
-    ): Promise<Message[]>{
-        return this.prisma.message.findMany({
+        cursor?: Prisma.MENSAJEWhereUniqueInput,
+        where?: Prisma.MENSAJEWhereInput,
+        orderBy?: Prisma.MENSAJEOrderByWithRelationInput,
+    ): Promise<MENSAJE[]>{
+        return this.prisma.mENSAJE.findMany({
             skip,
             take,
             cursor,
@@ -65,14 +65,16 @@ export class ChatService {
         })
     }
 
-    async createMessage(
+    async createMensaje(
         content: string,
-        roomId: number
+        roomId: number,
+        usuarioId:number
     ){
-        return await this.prisma.message.create({
+        return await this.prisma.mENSAJE.create({
             data:{
-                content,
-                roomId
+                ID_USUARIO:usuarioId,
+                CONTENIDO:content,
+                ID_ROOM:roomId
             }
         })
     }

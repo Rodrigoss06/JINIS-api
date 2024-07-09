@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TiposParticipantesController } from './tipos-participantes.controller';
+import { TiposParticipantesController } from './tipos-usuarios.controller';
 
 describe('TiposParticipantesController', () => {
   let controller: TiposParticipantesController;

@@ -7,115 +7,118 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model MAE_PARTICIPANTES {
-  ID_PARTICIPANTE         Int                     @id @default(autoincrement())
-  NOMBRES                 String                  @db.VarChar(100)
-  APELLIDO_PATERNO        String                  @db.VarChar(50)
-  APELLIDO_MATERNO        String                  @db.VarChar(50)
-  ID_TIPO_PARTICIPANTE    Int
-  CORREO_ELECTRONICO      String                  @db.VarChar(100)
-  ID_TIPO_DOCUMENTO       Int
-  TELEFONO                String?                 @db.VarChar(12)
-  CONTRASENA              String                  @db.VarChar(100)
-  ID_EVENTOS_ASISTIDOS    Int
-  FECHA_NACIMIENTO        DateTime?               @db.Date
-  DIRECCION               String?                 @db.VarChar(200)
-  GENERO                  String?                 @db.Char(1)
-  CREATED_AT              DateTime?               @default(now()) @db.Timestamp(6)
-  UPDATED_AT              DateTime?               @db.Timestamp(6)
-  TRS_EVENTOS_ASISTIDOS   TRS_EVENTOS_ASISTIDOS   @relation(fields: [ID_EVENTOS_ASISTIDOS], references: [ID_EVENTOS_ASISTIDOS], onDelete: NoAction, onUpdate: NoAction)
-  MAE_TIPO_DOCUMENTO      MAE_TIPO_DOCUMENTO      @relation(fields: [ID_TIPO_DOCUMENTO], references: [ID_TIPO_DOCUMENTO], onDelete: NoAction, onUpdate: NoAction)
-  MAE_TIPOS_PARTICIPANTES MAE_TIPOS_PARTICIPANTES @relation(fields: [ID_TIPO_PARTICIPANTE], references: [ID_TIPO_PARTICIPANTE], onDelete: NoAction, onUpdate: NoAction)
+model USUARIO {
+  ID_USUARIO             Int                     @id @default(autoincrement())
+  NOMBRES                String                  @db.VarChar(100)
+  APELLIDO_PATERNO       String                  @db.VarChar(50)
+  APELLIDO_MATERNO       String                  @db.VarChar(50)
+  TIPO_USUARIO           TIPO_USUARIO            @relation(fields: [ID_TIPO_USUARIO], references: [ID_TIPO_USUARIO])
+  ID_TIPO_USUARIO        Int
+  CORREO_ELECTRONICO     String                  @unique @db.VarChar(100)
+  TIPO_DOCUMENTO         TIPO_DOCUMENTO          @relation(fields: [ID_TIPO_DOCUMENTO], references: [ID_TIPO_DOCUMENTO])
+  ID_TIPO_DOCUMENTO      Int
+  TELEFONO               String?                 @db.VarChar(12)
+  CONTRASENA             String                  @db.VarChar(100)
+  FECHA_NACIMIENTO       DateTime?               @db.Date
+  DIRECCION              String?                 @db.VarChar(200)
+  GENERO                 String?                 @db.Char(1)
+  CREATED_AT             DateTime?               @default(now()) @db.Timestamp(6)
+  UPDATED_AT             DateTime?               @db.Timestamp(6)
+  EVENTOS_ASISTIDOS      EVENTOS_ASISTIDOS[]
+  MENSAJES               MENSAJE[]
 }
 
-model MAE_PONENTES {
-  ID_PONENTE         Int                @id @default(autoincrement())
-  ID_TIPO_DOCUMENTO  Int
-  DOCUMENTO          String             @db.VarChar(50)
-  NOMBRES            String             @db.VarChar(100)
-  APELLIDOS          String             @db.VarChar(100)
-  ENTIDAD            String             @db.VarChar(100)
-  BIOGRAFIA          String?
-  EMAIL              String?            @db.VarChar(100)
-  TELEFONO           String?            @db.VarChar(12)
-  CREATED_AT         DateTime?          @default(now()) @db.Timestamp(6)
-  UPDATED_AT         DateTime?          @db.Timestamp(6)
-  MAE_TIPO_DOCUMENTO MAE_TIPO_DOCUMENTO @relation(fields: [ID_TIPO_DOCUMENTO], references: [ID_TIPO_DOCUMENTO], onDelete: NoAction, onUpdate: NoAction)
-  TRS_EVENTOS        TRS_EVENTOS[]
+model TIPO_USUARIO {
+  ID_TIPO_USUARIO        Int                @id @default(autoincrement())
+  DESCRIPCION            String             @db.VarChar(50)
+  CREATED_AT             DateTime?          @default(now()) @db.Timestamp(6)
+  UPDATED_AT             DateTime?          @db.Timestamp(6)
+  USUARIOS               USUARIO[]
 }
 
-model MAE_TIPOS_PARTICIPANTES {
-  ID_TIPO_PARTICIPANTE Int                 @id @default(autoincrement())
-  DESCRIPCION          String              @db.VarChar(50)
-  CREATED_AT           DateTime?           @default(now()) @db.Timestamp(6)
-  UPDATED_AT           DateTime?           @db.Timestamp(6)
-  MAE_PARTICIPANTES    MAE_PARTICIPANTES[]
+model TIPO_DOCUMENTO {
+  ID_TIPO_DOCUMENTO      Int                @id @default(autoincrement())
+  DESCRIPCION            String             @db.VarChar(30)
+  CREATED_AT             DateTime?          @default(now()) @db.Timestamp(6)
+  UPDATED_AT             DateTime?          @db.Timestamp(6)
+  USUARIOS               USUARIO[]
+  PONENTES               PONENTE[]
 }
 
-model MAE_TIPO_DOCUMENTO {
-  ID_TIPO_DOCUMENTO Int                 @id @default(autoincrement())
-  DESCRIPCION       String              @db.VarChar(30)
-  CREATED_AT        DateTime?           @default(now()) @db.Timestamp(6)
-  UPDATED_AT        DateTime?           @db.Timestamp(6)
-  MAE_PARTICIPANTES MAE_PARTICIPANTES[]
-  MAE_PONENTES      MAE_PONENTES[]
+model PONENTE {
+  ID_PONENTE             Int                @id @default(autoincrement())
+  TIPO_DOCUMENTO         TIPO_DOCUMENTO     @relation(fields: [ID_TIPO_DOCUMENTO], references: [ID_TIPO_DOCUMENTO])
+  ID_TIPO_DOCUMENTO      Int
+  DOCUMENTO              String             @db.VarChar(50)
+  NOMBRES                String             @db.VarChar(100)
+  APELLIDOS              String             @db.VarChar(100)
+  ENTIDAD                String             @db.VarChar(100)
+  BIOGRAFIA              String?
+  EMAIL                  String?            @db.VarChar(100)
+  TELEFONO               String?            @db.VarChar(12)
+  CREATED_AT             DateTime?          @default(now()) @db.Timestamp(6)
+  UPDATED_AT             DateTime?          @db.Timestamp(6)
+  EVENTOS                EVENTO[]
 }
 
-model MAE_UBICACIONES {
-  ID_UBICACION Int           @id @default(autoincrement())
-  DESCRIPCION  String        @db.VarChar(100)
-  DIRECCION    String?       @db.VarChar(200)
-  CAPACIDAD    Int?
-  CREATED_AT   DateTime?     @default(now()) @db.Timestamp(6)
-  UPDATED_AT   DateTime?     @db.Timestamp(6)
-  TRS_EVENTOS  TRS_EVENTOS[]
+model UBICACION {
+  ID_UBICACION           Int                @id @default(autoincrement())
+  DESCRIPCION            String             @db.VarChar(100)
+  DIRECCION              String?            @db.VarChar(200)
+  CAPACIDAD              Int?
+  CREATED_AT             DateTime?          @default(now()) @db.Timestamp(6)
+  UPDATED_AT             DateTime?          @db.Timestamp(6)
+  EVENTOS                EVENTO[]
 }
 
-model TRS_EVENTOS {
-  ID_EVENTO             Int                     @id @default(autoincrement())
-  NOMBRE                Int
-  ID_PONENTE            Int
-  ID_UBICACION          Int
-  ID_HORARIO            Int
-  DESCRIPCION           String?
-  CREATED_AT            DateTime?               @default(now()) @db.Timestamp(6)
-  UPDATED_AT            DateTime?               @db.Timestamp(6)
-  TRS_HORARIOS          TRS_HORARIOS            @relation(fields: [ID_HORARIO], references: [ID_HORARIO], onDelete: NoAction, onUpdate: NoAction)
-  MAE_PONENTES          MAE_PONENTES            @relation(fields: [ID_PONENTE], references: [ID_PONENTE], onDelete: NoAction, onUpdate: NoAction)
-  MAE_UBICACIONES       MAE_UBICACIONES         @relation(fields: [ID_UBICACION], references: [ID_UBICACION], onDelete: NoAction, onUpdate: NoAction)
-  TRS_EVENTOS_ASISTIDOS TRS_EVENTOS_ASISTIDOS[]
+model EVENTO {
+  ID_EVENTO              Int                @id @default(autoincrement())
+  NOMBRE                 String             @db.VarChar(255)
+  PONENTE                PONENTE            @relation(fields: [ID_PONENTE], references: [ID_PONENTE])
+  ID_PONENTE             Int
+  UBICACION              UBICACION          @relation(fields: [ID_UBICACION], references: [ID_UBICACION])
+  ID_UBICACION           Int
+  HORARIO                HORARIO            @relation(fields: [ID_HORARIO], references: [ID_HORARIO])
+  ID_HORARIO             Int
+  DESCRIPCION            String?
+  CREATED_AT             DateTime?          @default(now()) @db.Timestamp(6)
+  UPDATED_AT             DateTime?          @db.Timestamp(6)
+  ASISTENTES             EVENTOS_ASISTIDOS[]
 }
 
-model TRS_EVENTOS_ASISTIDOS {
-  ID_EVENTOS_ASISTIDOS Int                 @id @default(autoincrement())
-  ID_EVENTO            Int
-  FECHA_ASISTENCIA     DateTime?           @db.Date
-  CREATED_AT           DateTime?           @default(now()) @db.Timestamp(6)
-  UPDATED_AT           DateTime?           @db.Timestamp(6)
-  MAE_PARTICIPANTES    MAE_PARTICIPANTES[]
-  TRS_EVENTOS          TRS_EVENTOS         @relation(fields: [ID_EVENTO], references: [ID_EVENTO], onDelete: NoAction, onUpdate: NoAction)
+model EVENTOS_ASISTIDOS {
+  ID_EVENTO_ASISTIDO     Int                @id @default(autoincrement())
+  EVENTO                 EVENTO             @relation(fields: [ID_EVENTO], references: [ID_EVENTO])
+  ID_EVENTO              Int
+  USUARIO                USUARIO            @relation(fields: [ID_USUARIO], references: [ID_USUARIO])
+  ID_USUARIO             Int
+  FECHA_ASISTENCIA       DateTime?          @db.Date
+  CREATED_AT             DateTime?          @default(now()) @db.Timestamp(6)
+  UPDATED_AT             DateTime?          @db.Timestamp(6)
 }
 
-model TRS_HORARIOS {
-  ID_HORARIO  Int           @id @default(autoincrement())
-  HORA_INICIO DateTime      @db.Time(6)
-  HORA_FIN    DateTime      @db.Time(6)
-  FECHA       DateTime?     @db.Date
-  CREATED_AT  DateTime?     @default(now()) @db.Timestamp(6)
-  UPDATED_AT  DateTime?     @db.Timestamp(6)
-  TRS_EVENTOS TRS_EVENTOS[]
+model HORARIO {
+  ID_HORARIO             Int                @id @default(autoincrement())
+  HORA_INICIO            DateTime           @db.Time(6)
+  HORA_FIN               DateTime           @db.Time(6)
+  FECHA                  DateTime?          @db.Date
+  CREATED_AT             DateTime?          @default(now()) @db.Timestamp(6)
+  UPDATED_AT             DateTime?          @db.Timestamp(6)
+  EVENTOS                EVENTO[]
 }
 
-model Room {
-  id       Int       @id @default(autoincrement())
-  name     String    @db.VarChar(255)
-  messages Message[]
+model MENSAJE {
+  ID_MENSAJE             Int                @id @default(autoincrement())
+  CONTENIDO              String             @db.VarChar(500)
+  CREATED_AT             DateTime           @default(now()) @db.Timestamp(6)
+  ROOM                   ROOM               @relation(fields: [ID_ROOM], references: [ID_ROOM])
+  ID_ROOM                Int
+  USUARIO                USUARIO            @relation(fields: [ID_USUARIO], references: [ID_USUARIO])
+  ID_USUARIO             Int
 }
 
-model Message {
-  id        Int      @id @default(autoincrement())
-  content   String
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  roomId    Int
-  room      Room     @relation(fields: [roomId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+model ROOM {
+  ID_ROOM                Int                @id @default(autoincrement())
+  NOMBRE                 String             @db.VarChar(255)
+  MENSAJES               MENSAJE[]
 }

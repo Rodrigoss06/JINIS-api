@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MAE_PONENTES, Prisma } from '@prisma/client';
+import { PONENTE, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -7,20 +7,20 @@ export class PonentesService {
     constructor(private prisma:PrismaService){}
 
     async ponente(
-        ponenteWhereUniqueInput: Prisma.MAE_PONENTESWhereUniqueInput
-    ): Promise<MAE_PONENTES|null>{
-        return this.prisma.mAE_PONENTES.findUnique({
+        ponenteWhereUniqueInput: Prisma.PONENTEWhereUniqueInput
+    ): Promise<PONENTE|null>{
+        return this.prisma.pONENTE.findUnique({
             where: ponenteWhereUniqueInput
         })
     }
     async ponentes(
         skip?: number,
         take?: number,
-        cursor?: Prisma.MAE_PONENTESWhereUniqueInput,
-        where?: Prisma.MAE_PONENTESWhereInput,
-        orderBy?: Prisma.MAE_PONENTESOrderByWithRelationInput,
-    ):Promise<MAE_PONENTES[]>{
-        return this.prisma.mAE_PONENTES.findMany({
+        cursor?: Prisma.PONENTEWhereUniqueInput,
+        where?: Prisma.PONENTEWhereInput,
+        orderBy?: Prisma.PONENTEOrderByWithRelationInput,
+    ):Promise<PONENTE[]>{
+        return this.prisma.pONENTE.findMany({
             skip,
             take,
             cursor,

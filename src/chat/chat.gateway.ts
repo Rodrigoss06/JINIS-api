@@ -24,12 +24,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
             this.server.to(roomName).emit('message', `User left room: ${roomName}`);
         });
 
-        client.on('message', async({ roomName, message }) => {
+        client.on('message', async({ roomName, message, usuarioId }) => {
             console.log(roomName)
             console.log(message)
             const room = await this.chatService.room(roomName)
             if (room) {
-                await this.chatService.createMessage(message,room.id)
+                await this.chatService.createMensaje(message,room.ID_ROOM, usuarioId)
                 this.server.to(roomName).emit('message', message);
             }
         });

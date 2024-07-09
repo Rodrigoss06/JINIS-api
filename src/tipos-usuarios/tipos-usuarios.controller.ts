@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { TiposParticipantesService } from './tipos-participantes.service';
+import { TiposParticipantesService } from './tipos-usuarios.service';
 
 @Controller('tipos-participantes')
 export class TiposParticipantesController {

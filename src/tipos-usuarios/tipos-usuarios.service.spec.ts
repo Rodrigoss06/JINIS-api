@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TiposParticipantesService } from './tipos-participantes.service';
+import { TiposParticipantesService } from './tipos-usuarios.service';
 
 describe('TiposParticipantesService', () => {
   let service: TiposParticipantesService;

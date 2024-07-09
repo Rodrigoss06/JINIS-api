@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, TRS_EVENTOS } from '@prisma/client';
+import { Prisma, EVENTO } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class EventosService {
     constructor(private prisma:PrismaService){}
     async evento(
-        eventoWhereUniqueInput: Prisma.TRS_EVENTOSWhereUniqueInput
-    ): Promise<TRS_EVENTOS|null>{
-        return this.prisma.tRS_EVENTOS.findUnique({
+        eventoWhereUniqueInput: Prisma.EVENTOWhereUniqueInput
+    ): Promise<EVENTO|null>{
+        return this.prisma.eVENTO.findUnique({
             where: eventoWhereUniqueInput
         })
     }
     async eventos(
         skip?: number,
         take?: number,
-        cursor?: Prisma.TRS_EVENTOSWhereUniqueInput,
-        where?: Prisma.TRS_EVENTOSWhereInput,
-        orderBy?: Prisma.TRS_EVENTOSOrderByWithRelationInput,
-    ): Promise<TRS_EVENTOS[]>{
-        return this.prisma.tRS_EVENTOS.findMany({
+        cursor?: Prisma.EVENTOWhereUniqueInput,
+        where?: Prisma.EVENTOWhereInput,
+        orderBy?: Prisma.EVENTOOrderByWithRelationInput,
+    ): Promise<EVENTO[]>{
+        return this.prisma.eVENTO.findMany({
             skip,
             take,
             cursor,
