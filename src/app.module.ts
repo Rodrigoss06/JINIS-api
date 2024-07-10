@@ -19,9 +19,11 @@ import { ChatService } from './chat/chat.service';
 import { TipoDocumentoController } from './tipo-documento/tipo-documento.controller';
 import { TipoDocumentoService } from './tipo-documento/tipo-documento.service';
 import { ChatController } from './chat/chat.controller';
+import { LoginController } from './login/login.controller';
+import { LoginService } from './login/login.service';
 
 @Module({
-  controllers: [ UsuariosController, PonentesController, EventosController, HorariosController, UbicacionesController, EventosAsistidosController, TiposParticipantesController, TipoDocumentoController, ChatController],
-  providers: [ ChatGateway,ChatService,PrismaService, UsuariosService, PonentesService, EventosService, HorariosService, UbicacionesService, EventosAsistidosService, TiposParticipantesService, TipoDocumentoService],
+  controllers: [ UsuariosController, PonentesController, EventosController, HorariosController, UbicacionesController, EventosAsistidosController, TiposParticipantesController, TipoDocumentoController, ChatController, LoginController],
+  providers: [ ChatGateway,ChatService,PrismaService, UsuariosService, PonentesService, EventosService, HorariosService, UbicacionesService, EventosAsistidosService, TiposParticipantesService, TipoDocumentoService, LoginService],
 })
 export class AppModule {}
