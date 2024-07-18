@@ -6,14 +6,14 @@ import { PrismaService } from 'src/prisma.service';
 export class TiposParticipantesService {
     constructor(private prisma:PrismaService){}
 
-    async participante(
+    async tipoUsuario(
         participanteWhereUniqueInput: Prisma.TIPO_USUARIOWhereUniqueInput
     ): Promise<TIPO_USUARIO|null>{
         return this.prisma.tIPO_USUARIO.findUnique({
             where: participanteWhereUniqueInput
         })
     }
-    async tiposParticipantes(
+    async tiposUsuarios(
         skip?: number,
         take?: number,
         cursor?: Prisma.TIPO_USUARIOWhereUniqueInput,

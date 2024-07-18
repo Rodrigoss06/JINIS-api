@@ -7,9 +7,9 @@ export class LoginService {
     constructor(private prisma:PrismaService){}
 
     async usuario(
-        participanteWhereUniqueInput: Prisma.USUARIOWhereUniqueInput
+        participanteWhereUniqueInput: Prisma.USUARIOWhereInput
     ): Promise<USUARIO|null>{
-        return this.prisma.uSUARIO.findUnique({
+        return this.prisma.uSUARIO.findFirst({
             where: participanteWhereUniqueInput
         })
     }

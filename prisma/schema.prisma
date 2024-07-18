@@ -22,6 +22,7 @@ model USUARIO {
   GENERO             String?             @db.Char(1)
   CREATED_AT         DateTime?           @default(now()) @db.Timestamp(6)
   UPDATED_AT         DateTime?           @db.Timestamp(6)
+  DNI                Int
   EVENTOS_ASISTIDOS  EVENTOS_ASISTIDOS[]
   MENSAJES           MENSAJE[]
   TIPO_DOCUMENTO     TIPO_DOCUMENTO      @relation(fields: [ID_TIPO_DOCUMENTO], references: [ID_TIPO_DOCUMENTO])

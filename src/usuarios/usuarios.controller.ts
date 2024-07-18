@@ -17,4 +17,12 @@ export class UsuariosController {
         const participante = await this.usuariosService.participante({ID_USUARIO:Number(id)})
         return {status:200,message:`get participante ${id}`, data:participante}
     }
+
+    @Get("/dni/:id")
+    async getUsuarioByDni(@Param("id") dni:string){
+        console.log(dni)
+        const usuario = await this.usuariosService.participante({DNI:Number(dni)})
+        console.log(usuario)
+        return {status:200,message:`get usuario by ${dni}`, data:usuario}
+    }
 }

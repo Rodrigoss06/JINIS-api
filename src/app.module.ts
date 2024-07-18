@@ -21,9 +21,23 @@ import { TipoDocumentoService } from './tipo-documento/tipo-documento.service';
 import { ChatController } from './chat/chat.controller';
 import { LoginController } from './login/login.controller';
 import { LoginService } from './login/login.service';
+import { AsistenciaController } from './asistencia/asistencia.controller';
+import { AsistenciaService } from './asistencia/asistencia.service';
+import { MailModule } from './mail/mail.module';
+import { ConfigModule } from '@nestjs/config';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { join } from 'path';
 
 @Module({
-  controllers: [ UsuariosController, PonentesController, EventosController, HorariosController, UbicacionesController, EventosAsistidosController, TiposParticipantesController, TipoDocumentoController, ChatController, LoginController],
-  providers: [ ChatGateway,ChatService,PrismaService, UsuariosService, PonentesService, EventosService, HorariosService, UbicacionesService, EventosAsistidosService, TiposParticipantesService, TipoDocumentoService, LoginService],
+  controllers: [ UsuariosController, PonentesController, EventosController, HorariosController, UbicacionesController, EventosAsistidosController, TiposParticipantesController, TipoDocumentoController, ChatController, LoginController, AsistenciaController],
+  providers: [ ChatGateway,ChatService,PrismaService, UsuariosService, PonentesService, EventosService, HorariosService, UbicacionesService, EventosAsistidosService, TiposParticipantesService, TipoDocumentoService, LoginService, AsistenciaService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // Hace que el ConfigModule esté disponible en toda la aplicación
+      envFilePath: '.env', // Ruta a tu archivo de configuración .env
+    }),
+    MailModule,
+    // Otros módulos
+  ],
 })
 export class AppModule {}
